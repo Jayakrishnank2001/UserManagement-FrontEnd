@@ -46,7 +46,6 @@ export class AdminCreateuserComponent implements OnInit{
         Swal.fire("Error",err.error.message,"error")
       })
     }
-    this.form.reset()
   }
 
 }
