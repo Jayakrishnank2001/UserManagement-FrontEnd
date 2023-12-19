@@ -9,7 +9,7 @@ import { Emitters } from '../../emitters/emitters';
 })
 export class AdminNavComponent implements OnInit{
 
-  authenticated=false
+  authenticated=true
 
   constructor(private http:HttpClient) {}
 

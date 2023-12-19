@@ -51,10 +51,11 @@ export class AdminLoginComponent implements OnInit{
     }else{
       this.http.post('http://localhost:5000/api/admin/login',user,{
         withCredentials:true
-      }).subscribe((res)=>this.router.navigate(['/admin/dashboard']),
-      (err)=>{
+      }).subscribe({
+        next:(res)=>this.router.navigate(['/admin/dashboard']),
+      error:(err)=>{
         Swal.fire("Error",err.error.message,"error")
-      })
+      }})
     }
   }
 }

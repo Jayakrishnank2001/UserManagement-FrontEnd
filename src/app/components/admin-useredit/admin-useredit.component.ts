@@ -30,13 +30,15 @@ export class AdminUsereditComponent implements OnInit{
 
     this.http.get('http://localhost:5000/api/admin/active',{
       withCredentials:true
-    }).subscribe((res:any)=>{
+    }).subscribe({
+      next:(res:any)=>{
       this.getusers(this.param)
       Emitters.authEmitter.emit(true)
-    },(err)=>{
+    },
+    error:(err)=>{
       this.route.navigate(['/admin'])
       Emitters.authEmitter.emit(false)
-    })
+    }})
   }
 
   validateEmail=(email:any)=>{
@@ -56,25 +58,28 @@ export class AdminUsereditComponent implements OnInit{
     }else if(user.name == ''){
       Swal.fire("Error","fields cannot be empty","error")
     }else{
-      this.http.post('http://localhost:5000/api/editUser',user,{
+      this.http.post('http://localhost:5000/api/admin/editUser',user,{
         withCredentials:true
-      }).subscribe(()=>this.route.navigate(['/admin/userlist']),
-      (err)=>{
+      }).subscribe({
+        next:()=>this.route.navigate(['/admin/userlist']),
+      error:(err)=>{
         Swal.fire("Error",err.error.message,"error")
-      })
+      }})
     }
   }
 
   getusers(userId:any){
     this.http.post(`http://localhost:5000/api/admin/editDetails/${userId}`,{},{
       withCredentials:true
-    }).subscribe((res:any)=>{
+    }).subscribe({
+      next:(res:any)=>{
       this.username=res.name
       this.email=res.email
       Emitters.authEmitter.emit(true)
-    },(err)=>{
+    },
+    error:(err)=>{
       this.route.navigate(['/admin'])
       Emitters.authEmitter.emit(false)
-    })
+    }})
   }
 }

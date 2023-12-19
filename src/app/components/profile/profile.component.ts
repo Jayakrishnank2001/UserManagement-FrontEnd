@@ -34,14 +34,15 @@ export class ProfileComponent implements OnInit{
   ngOnInit(): void {
     this.http.get('http://localhost:5000/api/user',{
       withCredentials:true
-    }).subscribe((res:any)=>{
+    }).subscribe({
+      next:(res:any)=>{
       this.store.dispatch(retrieveprofile())
       Emitters.authEmitter.emit(true)
     },
-    (err)=>{
+    error:(err)=>{
       this.router.navigate(['/'])
       Emitters.authEmitter.emit(false)
-    })
+    }})
   }
 
   onFileSelected(event:any){
@@ -54,12 +55,14 @@ export class ProfileComponent implements OnInit{
     formData.append('image',this.selectedFile,this.selectedFile.name)
     this.http.post('http://localhost:5000/api/profile-upload-single',formData,{
       withCredentials:true
-    }).subscribe((res:any)=>{
+    }).subscribe({
+      next:(res:any)=>{
       Emitters.authEmitter.emit(true)
       this.store.dispatch(retrieveprofile())
       Swal.fire('Success','Saved','success')
-    },(err)=>{
+    },
+    error:(err)=>{
       Swal.fire("Error",err.error.message,'error')
-    })
+    }})
   }
 }

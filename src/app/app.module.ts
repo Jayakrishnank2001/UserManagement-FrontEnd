@@ -49,10 +49,10 @@ import { AdminRoutingModule } from './components/admin-login/admin.routing'
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({userdetails:profileReducer,allusers:postReducer}),
+    StoreModule.forRoot({userdetails:profileReducer,allusers:postReducer},{}),
     EffectsModule.forRoot([appEffects])
   ],
-  providers: [provideClientHydration(),AppService],
+  providers: [AppService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

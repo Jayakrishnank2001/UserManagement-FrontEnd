@@ -1,7 +1,9 @@
 <app-admin-nav></app-admin-nav>
+<div class="container d-flex flex-column justify-content-center align-items-center mt-5">
 <form [formGroup]="form" (submit)="submit()" class="form-signin">
     <h1>Welcome Admin</h1>
     <input type="email" formControlName="email" class="form-control" placeholder="email" required>
     <input type="password" formControlName="password" class="form-control" placeholder="password" required>
     <button class="w-100 btn btn-lg btn-primary">Sign In</button>
 </form>
+</div>

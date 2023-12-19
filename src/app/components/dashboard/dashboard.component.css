@@ -4,3 +4,12 @@
     padding: 15px;
     margin: auto;
   }
+  
+  .dashboard-img{
+    width:100%;
+    height:auto;
+  }
+
+  .content-container{
+    margin-top: -24px;
+  }

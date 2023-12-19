@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component,OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2'
 
@@ -42,9 +42,11 @@ export class AdminCreateuserComponent implements OnInit{
     }else{
       this.http.post('http://localhost:5000/api/admin/createuser',user,{
         withCredentials:true
-      }).subscribe(()=>this.router.navigate(['/admin/userlist']),(err)=>{
+      }).subscribe({
+        next:()=>this.router.navigate(['/admin/userlist']),
+        error:(err)=>{
         Swal.fire("Error",err.error.message,"error")
-      })
+    }})
     }
   }
 

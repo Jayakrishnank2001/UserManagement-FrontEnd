@@ -17,6 +17,10 @@ import Swal from 'sweetalert2'
 
 export class AdminUserlistComponent implements OnInit{
 
+  filteredUsers:Users[]=[]
+  users!:Users[]
+  searchText!:string
+
   constructor(private http:HttpClient,private store:Store<{allusers:Users[]}>,private router:Router,private appService:AppService){}
 
   userdata$=this.store.pipe(select(uniqueEmail))
@@ -24,30 +28,65 @@ export class AdminUserlistComponent implements OnInit{
   ngOnInit(): void {
     this.http.get('http://localhost:5000/api/admin/active',{
       withCredentials:true
-    }).subscribe((res:any)=>{
+    }).subscribe({
+      next:(res:any)=>{
       this.store.dispatch(retrievepost())
       Emitters.authEmitter.emit(true)
-    },(err)=>{
+    },
+    error:(err)=>{
       this.router.navigate(['/admin'])
       Emitters.authEmitter.emit(false)
-  })
+  }})
   }
 
   deleteUser(userId:any){
-    this.http.post(`http://localhost:5000/api/admin/deleteUser/${userId}`,{},{
+
+    Swal.fire({
+      title:'Are you sure?',
+      text:'Do you want to delete this user?',
+      icon:'warning',
+      showCancelButton:true,
+      confirmButtonText:'Yes, delete it!',
+      cancelButtonText:'No, cancel!'
+    }).then((result)=>{
+      if(result.isConfirmed){
+      this.http.post(`http://localhost:5000/api/admin/deleteUser/${userId}`,{},{
       withCredentials:true
-    }).subscribe((res:any)=>{
+    }).subscribe({
+      next:(res:any)=>{
       this.store.dispatch(retrievepost())
       Swal.fire("Success","User Deleted Successfully","success")
       Emitters.authEmitter.emit(true)
-    },(err)=>{
+    },
+    error:(err)=>{
       this.router.navigate(['/admin'])
       Emitters.authEmitter.emit(false)
+    }})
+    Swal.fire(
+      'Deleted!',
+      'User has been deleted.',
+      'success'
+    )
+    }
     })
   }
 
   editUser(userId:any){
     this.router.navigate(['/admin/edit',userId])
+  }
+
+  search():void{
+    if(!this.searchText){
+      this.filteredUsers=[...this.users] 
+    }
+
+    this.filteredUsers=this.users.filter((user)=>
+      user.name.toLowerCase().includes(this.searchText.toLowerCase())
+    )
+  }
+
+  showSearchResult():void{
+    this.search()
   }
 
 }

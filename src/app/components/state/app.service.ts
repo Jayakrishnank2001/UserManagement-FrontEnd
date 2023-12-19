@@ -4,18 +4,17 @@ import { Injectable } from "@angular/core";
 @Injectable()
 
 export class AppService{
-    baseUrl="http://localhost:5000/api/"
 
     constructor(private http:HttpClient) {}
 
     loadProfile(){
-        return this.http.get(this.baseUrl+'profile',{
+        return this.http.get('http://localhost:5000/api/profile',{
             withCredentials:true
         })
     }
 
     loadUsers(){
-        return this.http.get(this.baseUrl+'admin/users',{
+        return this.http.get('http://localhost:5000/api/admin/users',{
             withCredentials:true
         })
     }

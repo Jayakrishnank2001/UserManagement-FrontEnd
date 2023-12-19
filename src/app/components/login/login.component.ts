@@ -23,13 +23,15 @@ export class LoginComponent implements OnInit{
     })
     this.http.get('http://localhost:5000/api/user',{
       withCredentials:true
-    }).subscribe((res:any)=>{
+    }).subscribe({
+      next:(res:any)=>{
       this.router.navigate(['/'])
       Emitters.authEmitter.emit(true)
-    },(err)=>{
+    },
+    error:(err)=>{
       this.router.navigate(['/login'])
       Emitters.authEmitter.emit(false)
-    })
+    }})
   }
 
   ValidateEmail=(email:any)=>{
@@ -50,11 +52,12 @@ export class LoginComponent implements OnInit{
     }else{
       this.http.post('http://localhost:5000/api/login',user,{
         withCredentials:true
-      }).subscribe((res)=>this.router.navigate(['/']),
-      (err)=>{
+      }).subscribe({
+        next:(res)=>this.router.navigate(['/']),
+        error:(err)=>{
         Swal.fire("Error",err.error.message,"error")
       }
-      )
+    })
     }
   }
 

@@ -41,13 +41,14 @@ export class RegisterComponent implements OnInit{
     }else{
       this.http.post("http://localhost:5000/api/register",user,{
         withCredentials:true
-      }).subscribe(()=>{
+      }).subscribe({
+        next:()=>{
         this.router.navigate(['/'])
-      }),
-      (err:any)=>{
+      },
+      error:(err)=>{
         Swal.fire("Error",err.error.message,"error")
       }
     }
+  )}
   }
-
 }
