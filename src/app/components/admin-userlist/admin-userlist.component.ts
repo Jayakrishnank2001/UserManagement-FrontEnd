@@ -18,7 +18,7 @@ import Swal from 'sweetalert2'
 export class AdminUserlistComponent implements OnInit{
 
   filteredUsers:Users[]=[]
-  users!:Users[]
+  users:Users[]=[]
   searchText!:string
 
   constructor(private http:HttpClient,private store:Store<{allusers:Users[]}>,private router:Router,private appService:AppService){}
@@ -37,6 +37,12 @@ export class AdminUserlistComponent implements OnInit{
       this.router.navigate(['/admin'])
       Emitters.authEmitter.emit(false)
   }})
+
+  this.store.dispatch(retrievepost())
+  this.userdata$.subscribe((data:Users[])=>{
+    this.users=data
+    this.filteredUsers=[...data]
+  })
   }
 
   deleteUser(userId:any){
@@ -78,15 +84,11 @@ export class AdminUserlistComponent implements OnInit{
   search():void{
     if(!this.searchText){
       this.filteredUsers=[...this.users] 
-    }
-
-    this.filteredUsers=this.users.filter((user)=>
+    }else if(this.users){
+      this.filteredUsers=this.users.filter((user)=>
       user.name.toLowerCase().includes(this.searchText.toLowerCase())
     )
-  }
-
-  showSearchResult():void{
-    this.search()
+    }
   }
 
 }

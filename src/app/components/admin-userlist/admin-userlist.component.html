@@ -5,7 +5,6 @@
   <div class=" ">
     <div class="input-group d-flex align-items-center justify-content-center my-3">
       <input [ngStyle]="{ 'height' : '38px' }" placeholder="Search" type="text" [(ngModel)]="searchText" class="input" (input)="search()" />
-      <button class="btn btn-primary ml-4" (click)="showSearchResult()">Search</button>
     </div>
   </div>
   <div class="container">
@@ -19,8 +18,8 @@
           <th scope="col">Action</th>
         </tr>
       </thead>
-      <tbody *ngIf="(userdata$ | async) as userdata">
-        <tr *ngFor="let item of userdata; let i = index">
+      <tbody *ngIf="filteredUsers.length">
+        <tr *ngFor="let item of filteredUsers; let i = index">
           <td>{{i+1}}</td>
           <td><img class="rounded-circle" [src]='"http://localhost:5000/file/"+item.image' alt="No image" width="40px" height="40px"></td>
           <td>{{item.name}}</td>
