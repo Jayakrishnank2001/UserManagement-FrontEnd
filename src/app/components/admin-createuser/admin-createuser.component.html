@@ -1,9 +1,9 @@
 <app-admin-nav></app-admin-nav>
 
 <form [formGroup]="form" (submit)="submit()" class="form-signin">
-    <h1 class="h3 mb-3 text-center">Add User</h1>
-    <input formControlName="name" class="form-control" placeholder="Name" required>
-    <input formControlName="email" type="email" class="form-control" placeholder="Email" required>
-    <input formControlName="password" type="password" class="form-control" placeholder="Password" required>
+    <h1 class="h3 mb-3 text-center">ADD USER</h1>
+    <input formControlName="name" class="form-control mt-4" placeholder="Name" required>
+    <input formControlName="email" type="email" class="form-control mt-2" placeholder="Email" required>
+    <input formControlName="password" type="password" class="form-control mt-2" placeholder="Password" required>
     <button class="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
   </form>
