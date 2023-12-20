@@ -9,8 +9,6 @@ import { Emitters } from '../../emitters/emitters';
 })
 export class HomeComponent implements OnInit{
 
-  message=""
-
   constructor(private http:HttpClient){}
 
   ngOnInit(): void {
